@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chart.js CDN for Visual Presensi Analytics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -48,7 +49,7 @@
             color: #0d9488;
             font-weight: 700;
         }
-        /* Custom Scrollbar for Smooth UX */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -68,7 +69,7 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo & Brand Title -->
@@ -90,14 +91,23 @@
                     <button onclick="showSection('karir')" id="nav-karir" class="nav-btn px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-slate-100">Karir (BMW)</button>
                     <button onclick="showSection('konseling')" id="nav-konseling" class="nav-btn px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-slate-100">Konseling Online</button>
                     <button onclick="showSection('curhat')" id="nav-curhat" class="nav-btn px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-slate-100">Curhat Anonim</button>
-                    <button onclick="showSection('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-slate-100">Materi & Edukasi</button>
+                    <button onclick="showSection('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-slate-100">Materi & Presensi</button>
                 </nav>
 
-                <!-- Action Button & Mobile Toggle -->
+                <!-- Action Button & Admin Login Status -->
                 <div class="flex items-center space-x-3">
+                    <div id="header-admin-badge" class="hidden items-center space-x-2 bg-amber-50 border border-amber-300 text-amber-800 text-xs px-3 py-1.5 rounded-xl font-bold">
+                        <i class="fa-solid fa-user-shield text-amber-600"></i>
+                        <span>Admin Guru BK</span>
+                        <button onclick="logoutAdmin()" title="Logout Admin" class="ml-1 text-slate-400 hover:text-red-600 transition">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+
                     <button onclick="showSection('konseling')" class="hidden sm:inline-flex items-center justify-center bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-all transform active:scale-95">
                         <i class="fa-solid fa-calendar-check mr-2"></i> Konseling Online
                     </button>
+
                     <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
@@ -113,7 +123,7 @@
             <button onclick="showSection('karir')" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Bimbingan Karir (BMW)</button>
             <button onclick="showSection('konseling')" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Konseling Online</button>
             <button onclick="showSection('curhat')" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Kotak Curhat Anonim</button>
-            <button onclick="showSection('materi')" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Materi & Edukasi</button>
+            <button onclick="showSection('materi')" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100">Materi & Presensi</button>
         </div>
     </header>
 
@@ -171,7 +181,6 @@
                     <p class="text-slate-500 text-sm mt-1">Dukungan holistik untuk kesuksesan belajar dan karir Anda</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Pilar Karir -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 hover:border-brand-500 hover:shadow-md transition group">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-solid fa-briefcase"></i>
@@ -182,7 +191,6 @@
                         </p>
                     </div>
 
-                    <!-- Pilar Pribadi -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 hover:border-brand-500 hover:shadow-md transition group">
                         <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-solid fa-heart"></i>
@@ -193,7 +201,6 @@
                         </p>
                     </div>
 
-                    <!-- Pilar Sosial -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 hover:border-brand-500 hover:shadow-md transition group">
                         <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-solid fa-users"></i>
@@ -204,7 +211,6 @@
                         </p>
                     </div>
 
-                    <!-- Pilar Belajar -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 hover:border-brand-500 hover:shadow-md transition group">
                         <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition">
                             <i class="fa-solid fa-book-open"></i>
@@ -221,14 +227,12 @@
         <!-- SECTION 2: PROFIL BK -->
         <section id="section-profil" class="section-block hidden py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Title Header -->
                 <div class="text-center max-w-2xl mx-auto mb-12">
                     <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Mengenal Kami</span>
                     <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Profil Bimbingan & Konseling</h2>
                     <p class="text-slate-600 mt-2">Mengenal peran tim BK, visi misi, serta komitmen pelayanan prima untuk siswa SMK.</p>
                 </div>
 
-                <!-- Visi & Misi Card Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                     <div class="bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-2xl p-8 shadow-lg">
                         <div class="flex items-center space-x-3 mb-4">
@@ -270,7 +274,6 @@
                     </div>
                 </div>
 
-                <!-- 3 Asas Utama Konseling -->
                 <div class="bg-slate-100 rounded-2xl p-8 mb-12">
                     <h3 class="text-xl font-bold text-slate-900 text-center mb-6">3 Asas Utama Konseling</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -297,33 +300,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Profil Tim Guru BK -->
-                <div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-6">Tim Guru Bimbingan & Konseling</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl border border-slate-200 p-6 flex items-center space-x-4 shadow-sm">
-                            <div class="w-16 h-16 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900">Guru BK 1, S.Pd., M.Kons.</h4>
-                                <p class="text-xs text-brand-600 font-medium">Koordinator BK / Spesialis Karir</p>
-                                <p class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> Jam Layanan: 07.30 - 15.30</p>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-xl border border-slate-200 p-6 flex items-center space-x-4 shadow-sm">
-                            <div class="w-16 h-16 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900">Deddy santoso, S.Pd.</h4>
-                                <p class="text-xs text-brand-600 font-medium">Konselor Pribadi-Sosial</p>
-                                <p class="text-xs text-slate-500 mt-1"><i class="fa-regular fa-clock mr-1"></i> Jam Layanan: 07.30 - 15.30</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -337,7 +313,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between">
                         <div class="p-6">
                             <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center text-xl mb-4">
@@ -360,7 +335,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between">
                         <div class="p-6">
                             <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center text-xl mb-4">
@@ -383,7 +357,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between">
                         <div class="p-6">
                             <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center text-xl mb-4">
@@ -471,10 +444,6 @@
                                     <span><i class="fa-regular fa-file-alt text-blue-500 mr-2"></i> Panduan Etika Kerja Industri DUDI</span>
                                     <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Artikel</span>
                                 </div>
-                                <div class="bg-white p-3 rounded-lg border border-slate-200 flex justify-between items-center text-sm cursor-pointer hover:border-brand-500 transition" onclick="showSection('materi')">
-                                    <span><i class="fa-regular fa-lightbulb text-amber-500 mr-2"></i> Tips Lolos Wawancara Kerja Pertama</span>
-                                    <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Panduan</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -508,10 +477,6 @@
                                 <div class="bg-white p-3 rounded-lg border border-slate-200 flex justify-between items-center text-sm cursor-pointer hover:border-brand-500 transition" onclick="showSection('materi')">
                                     <span><i class="fa-regular fa-file-pdf text-red-500 mr-2"></i> Panduan PTN Vokasi & Politeknik</span>
                                     <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Modul</span>
-                                </div>
-                                <div class="bg-white p-3 rounded-lg border border-slate-200 flex justify-between items-center text-sm cursor-pointer hover:border-brand-500 transition" onclick="showSection('materi')">
-                                    <span><i class="fa-regular fa-calendar-alt text-teal-500 mr-2"></i> Kalender Pendaftaran PTN 2026</span>
-                                    <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Jadwal</span>
                                 </div>
                             </div>
                         </div>
@@ -547,10 +512,6 @@
                                     <span><i class="fa-regular fa-file-code text-indigo-500 mr-2"></i> Template Business Model Canvas (BMC)</span>
                                     <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Modul</span>
                                 </div>
-                                <div class="bg-white p-3 rounded-lg border border-slate-200 flex justify-between items-center text-sm cursor-pointer hover:border-brand-500 transition" onclick="showSection('materi')">
-                                    <span><i class="fa-regular fa-comment-dots text-emerald-500 mr-2"></i> Storytelling & Digital Marketing Produk</span>
-                                    <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-600">Panduan</span>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -567,39 +528,6 @@
                     <p class="text-slate-600 mt-2">Daftarkan dirimu untuk sesi konseling tatap muka atau secara daring.</p>
                 </div>
 
-                <!-- 4 Langkah Pendaftaran -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">1</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">Isi Formulir</h4>
-                            <p class="text-xs text-slate-500 mt-1">Lengkapi data pendaftaran di bawah ini.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">2</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">Pilih Preferensi</h4>
-                            <p class="text-xs text-slate-500 mt-1">Pilih tempat di Ruang BK atau Google Meet.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">3</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">Konfirmasi WA</h4>
-                            <p class="text-xs text-slate-500 mt-1">Menerima konfirmasi otomatis via WhatsApp.</p>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">4</div>
-                        <div>
-                            <h4 class="font-bold text-slate-900 text-sm">Hadir Sesuai Jadwal</h4>
-                            <p class="text-xs text-slate-500 mt-1">Konseling dilaksanakan sesuai waktu terpilih.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Simulasi Konseling Online -->
                 <div class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-8">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                         <h3 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-file-signature text-brand-600 mr-2"></i> Formulir Jadwal Konseling</h3>
@@ -614,7 +542,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas & Jurusan *</label>
-                                <input type="text" id="konseling-kelas" required placeholder="Contoh: XI TKJ 1" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                <input type="text" id="konseling-kelas" required placeholder="Contoh: X TM" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                         </div>
 
@@ -709,11 +637,11 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-2xl mx-auto mb-10">
                     <span class="text-brand-600 font-bold text-sm uppercase tracking-wider">Pusat Bacaan & Unduhan</span>
-                    <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Materi & Edukasi Pengembangan Diri</h2>
-                    <p class="text-slate-600 mt-2">Kumpulan artikel, modul ajar, dan template bimbingan yang dapat diakses oleh siswa serta dikelola oleh Guru BK.</p>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mt-1">Materi, Presensi & Upload Tugas</h2>
+                    <p class="text-slate-600 mt-2">Kumpulan artikel, modul ajar, video pembelajaran, serta form presensi kehadiran & pengumpulkan tugas siswa.</p>
                 </div>
 
-                <!-- Navigation Switch (Murid vs Guru BK) -->
+                <!-- Navigation Switch (Murid vs Presensi vs Grafik Admin vs Guru BK) -->
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-8">
                     <div class="flex flex-wrap gap-2 w-full lg:w-auto">
                         <button id="materi-mode-murid" onclick="switchMateriMode('murid')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-brand-600 text-white shadow-sm transition">
@@ -722,27 +650,27 @@
                         <button id="materi-mode-presensi" onclick="switchMateriMode('presensi')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
                             <i class="fa-solid fa-clipboard-user mr-1.5 text-brand-600"></i> Form Presensi Murid
                         </button>
-                        <button id="materi-mode-grafik" onclick="switchMateriMode('grafik')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
-                            <i class="fa-solid fa-chart-column mr-1.5 text-brand-600"></i> Grafik & Laporan
+                        <button id="materi-mode-grafik" onclick="switchMateriMode('grafik')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition relative">
+                            <i class="fa-solid fa-chart-column mr-1.5 text-brand-600"></i> Rekapitulasi & Grafik
+                            <span class="ml-1 text-[10px] bg-amber-100 text-amber-800 font-extrabold px-1.5 py-0.5 rounded border border-amber-300"><i class="fa-solid fa-lock text-[9px] mr-0.5"></i> Admin</span>
                         </button>
-                        <button id="materi-mode-guru" onclick="switchMateriMode('guru')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                        <button id="materi-mode-guru" onclick="switchMateriMode('guru')" class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition relative">
                             <i class="fa-solid fa-cloud-arrow-up mr-1.5 text-brand-600"></i> Unggah Media (Guru BK)
+                            <span class="ml-1 text-[10px] bg-amber-100 text-amber-800 font-extrabold px-1.5 py-0.5 rounded border border-amber-300"><i class="fa-solid fa-lock text-[9px] mr-0.5"></i> Admin</span>
                         </button>
                     </div>
 
-                    <!-- Search & Filter Bar (Visible in Murid Mode) -->
+                    <!-- Search & Filter Bar -->
                     <div id="materi-search-container" class="flex flex-col sm:flex-row items-center gap-2 w-full lg:w-auto">
                         <div class="relative w-full sm:w-64">
                             <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400 text-xs"></i>
                             <input type="text" id="materi-search-input" onkeyup="filterModules()" placeholder="Cari judul media/materi..." class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
                         </div>
-                        <!-- Filter Tipe Media -->
                         <select id="materi-type-filter" onchange="filterModules()" class="w-full sm:w-auto border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
                             <option value="all">Semua Tipe Media</option>
                             <option value="doc">Dokumen / PDF</option>
-                            <option value="video font-semibold">Video Pembelajaran</option>
+                            <option value="video">Video Pembelajaran</option>
                         </select>
-                        <!-- Filter Kategori -->
                         <select id="materi-category-filter" onchange="filterModules()" class="w-full sm:w-auto border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
                             <option value="all">Semua Kategori</option>
                             <option value="karir">Karir & BMW</option>
@@ -753,12 +681,17 @@
                     </div>
                 </div>
 
-                <!-- SECTION: FORM PRESENSI KEHADIRAN SISWA -->
+                <!-- SUB-SECTION A: LIST MODUL & MEDIA SISWA -->
+                <div id="materi-murid-section" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- SUB-SECTION B: FORM PRESENSI KEHADIRAN SISWA -->
                 <div id="materi-presensi-section" class="hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm mb-12">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider"><i class="fa-solid fa-user-check mr-1"></i> Konfirmasi Pembelajaran</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-0.5">Form Presensi Kehadiran & Akses Modul Siswa</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mt-0.5">Form Presensi Kehadiran & Upload Tugas Siswa</h3>
                         </div>
                         <span class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full font-medium border border-emerald-200 hidden sm:inline-flex items-center">
                             <i class="fa-solid fa-circle-check mr-1"></i> Terintegrasi Grafik Analytics
@@ -772,17 +705,39 @@
                                 <input type="text" id="presensi-nama" required placeholder="Masukkan Nama Lengkap Anda" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas / Jurusan *</label>
-                                <select id="presensi-kelas" required class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                    <option value="">-- Pilih Kelas --</option>
-                                    <option value="X ">X</option>
-                                    <option value="XI">XI</option>
-                                    <option value="XII">XII</option>
-                                    <option value="0">0</option>
-                                    <option value="0">0</option>
-                                    <option value="0">0</option>
-                                    <option value="0">0</option>
-                                    <option value="0">0</option>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas & Jurusan *</label>
+                                <select id="presensi-kelas" required class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+                                    <option value="">-- Pilih Kelas & Jurusan --</option>
+                                    <optgroup label="--- KELAS X ---">
+                                        <option value="X TM">X TM (Teknik Mesin)</option>
+                                        <option value="X TO 1">X TO 1 (Teknik Otomotif 1)</option>
+                                        <option value="X TO 2">X TO 2 (Teknik Otomotif 2)</option>
+                                        <option value="X LK">X LK (Layanan Kesehatan)</option>
+                                        <option value="X ULP">X ULP (Usaha Layanan Pariwisata)</option>
+                                        <option value="X TKJ 1">X TKJ 1</option>
+                                        <option value="X TKJ 2">X TKJ 2</option>
+                                        <option value="X RPL 1">X RPL 1</option>
+                                        <option value="X TKR 1">X TKR 1</option>
+                                    </optgroup>
+                                    <optgroup label="--- KELAS XI ---">
+                                        <option value="XI TM">XI TM (Teknik Mesin)</option>
+                                        <option value="XI TO 1">XI TO 1 (Teknik Otomotif 1)</option>
+                                        <option value="XI TO 2">XI TO 2 (Teknik Otomotif 2)</option>
+                                        <option value="XI LK">XI LK (Layanan Kesehatan)</option>
+                                        <option value="XI ULP">XI ULP (Usaha Layanan Pariwisata)</option>
+                                        <option value="XI TKJ 1">XI TKJ 1</option>
+                                        <option value="XI RPL 1">XI RPL 1</option>
+                                        <option value="XI TKR 1">XI TKR 1</option>
+                                    </optgroup>
+                                    <optgroup label="--- KELAS XII ---">
+                                        <option value="XII TM">XII TM (Teknik Mesin)</option>
+                                        <option value="XII TO">XII TO (Teknik Otomotif)</option>
+                                        <option value="XII LK">XII LK (Layanan Kesehatan)</option>
+                                        <option value="XII ULP">XII ULP (Usaha Layanan Pariwisata)</option>
+                                        <option value="XII TKJ 1">XII TKJ 1</option>
+                                        <option value="XII RPL 1">XII RPL 1</option>
+                                        <option value="XII TKR 1">XII TKR 1</option>
+                                    </optgroup>
                                 </select>
                             </div>
                         </div>
@@ -797,6 +752,7 @@
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 mb-1">Jenis Aktivitas *</label>
                                 <select id="presensi-aktivitas" required class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="Mengumpulkan Dokumen Tugas">Mengumpulkan Dokumen Tugas</option>
                                     <option value="Telah Membaca/Melihat Preview">Telah Membaca / Melihat Preview</option>
                                     <option value="Meninggalkan Feedback/Mengunduh Modul">Mengunduh Modul / File</option>
                                     <option value="Menonton Video Pembelajaran">Menonton Video Pembelajaran</option>
@@ -804,129 +760,160 @@
                             </div>
                         </div>
 
+                        <!-- FITUR UPLOAD DOKUMEN TUGAS SISWA -->
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-semibold text-slate-700 flex items-center justify-between">
+                                <span><i class="fa-solid fa-file-arrow-up text-brand-600 mr-1.5"></i> Upload Dokumen Tugas Siswa <span class="text-slate-400 font-normal">(PDF atau Foto JPG/PNG)</span></span>
+                                <span class="text-[10px] font-bold text-brand-600 bg-brand-50 border border-brand-200 px-2 py-0.5 rounded-full"><i class="fa-solid fa-shield-halved mr-1"></i> Maks. 10 MB</span>
+                            </label>
+
+                            <div id="presensi-dropzone" class="border-2 border-dashed border-slate-300 hover:border-brand-500 bg-slate-50 hover:bg-brand-50/20 rounded-2xl p-5 text-center cursor-pointer transition flex flex-col items-center justify-center relative" onclick="document.getElementById('presensi-file-input').click()">
+                                <input type="file" id="presensi-file-input" accept=".pdf,image/jpeg,image/png,image/jpg,image/webp" class="hidden" onchange="handlePresensiFileChange(this)">
+                                
+                                <div id="presensi-file-prompt" class="space-y-1">
+                                    <div class="w-12 h-12 bg-white rounded-full shadow-sm border border-slate-200 flex items-center justify-center mx-auto mb-2 text-brand-600 text-xl">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-700">Klik atau seret file tugas ke sini untuk mengunggah</p>
+                                    <p class="text-[11px] text-slate-400">Format yang didukung: <span class="font-medium text-slate-600">.PDF, .JPG, .JPEG, .PNG</span> (Maksimal 10 MB)</p>
+                                </div>
+
+                                <div id="presensi-file-info" class="hidden w-full flex items-center justify-between bg-white border border-slate-200 p-3 rounded-xl shadow-sm">
+                                    <div class="flex items-center space-x-3 overflow-hidden">
+                                        <div id="presensi-file-icon" class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-bold flex-shrink-0">
+                                            <i class="fa-solid fa-file-pdf"></i>
+                                        </div>
+                                        <div class="text-left overflow-hidden">
+                                            <p id="presensi-file-name" class="text-xs font-bold text-slate-800 truncate">tugas_bk_siswa.pdf</p>
+                                            <p id="presensi-file-size" class="text-[10px] text-slate-500">2.4 MB</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="removePresensiFile(event)" class="text-red-500 hover:text-red-700 hover:bg-red-50 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold inline-flex items-center">
+                                        <i class="fa-solid fa-trash-can mr-1"></i> Hapus
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <p id="presensi-file-error" class="text-[11px] text-red-500 font-semibold mt-1 hidden">
+                                <i class="fa-solid fa-circle-exclamation mr-1"></i> Ukuran file melebihi 10 MB atau format file tidak sesuai!
+                            </p>
+                        </div>
+
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1">Catatan Singkat Pemahaman / Kesimpulan (Opsional)</label>
-                            <textarea id="presensi-catatan" rows="2" placeholder="Tuliskan poin penting yang Anda dapatkan dari materi..." class="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                            <textarea id="presensi-catatan" rows="2" placeholder="Tuliskan poin penting atau ringkasan tugas yang Anda kerjakan..." class="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
                         </div>
 
                         <div class="flex justify-end space-x-3 pt-2">
                             <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md transition inline-flex items-center">
-                                <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Presensi Kehadiran
+                                <i class="fa-solid fa-check-circle mr-1.5"></i> Simpan Presensi & Kirim Tugas
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <!-- SECTION: GRAFIK & LAPORAN PRESENSI (REKAP & DOWNLOAD PDF/DOC) -->
-                <div id="materi-grafik-section" class="hidden space-y-8 mb-12">
-                    <!-- Header Action Bar -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
-                        <div>
-                            <span class="text-xs font-bold text-brand-600 uppercase tracking-wider"><i class="fa-solid fa-chart-line mr-1"></i> Dashboard Analytics</span>
-                            <h3 class="text-2xl font-extrabold text-slate-900">Laporan & Indikator Presensi Kehadiran Murid</h3>
-                            <p class="text-xs text-slate-500 mt-1">Ringkasan grafik kehadiran dan statistik akses materi oleh siswa berdasarkan kelas.</p>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <button onclick="exportPresensiPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow transition inline-flex items-center">
-                                <i class="fa-solid fa-file-pdf mr-2"></i> Unduh Laporan PDF
-                            </button>
-                            <button onclick="exportPresensiDOC()" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow transition inline-flex items-center">
-                                <i class="fa-solid fa-file-word mr-2"></i> Unduh Laporan DOC
-                            </button>
-                        </div>
-                    </div>
-
+                <!-- SUB-SECTION C: REKAPITULASI TABLE & GRAFIK ANALYTICS (ADMIN GURU BK) -->
+                <div id="materi-grafik-section" class="hidden space-y-8">
                     <!-- Summary Stat Cards -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-semibold text-slate-500">Total Presensi Masuk</span>
-                                <h4 id="stat-total-presensi" class="text-2xl font-extrabold text-slate-900">0</h4>
+                                <p class="text-xs font-medium text-slate-500">Total Pengisian Presensi</p>
+                                <p id="stat-total-presensi" class="text-2xl font-black text-slate-900 mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-clipboard-user"></i>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-book-open"></i>
-                            </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-semibold text-slate-500">Modul/Media Diakses</span>
-                                <h4 id="stat-total-modul" class="text-2xl font-extrabold text-slate-900">0</h4>
+                                <p class="text-xs font-medium text-slate-500">Berkas Tugas Terlampir</p>
+                                <p id="stat-total-tugas" class="text-2xl font-black text-slate-900 mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-100 text-indigo-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-file-arrow-up"></i>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-semibold text-slate-500">Kelas Teraktif</span>
-                                <h4 id="stat-kelas-teraktif" class="text-xl font-extrabold text-slate-900">-</h4>
+                                <p class="text-xs font-medium text-slate-500">Kelas Paling Aktif</p>
+                                <p id="stat-kelas-aktif" class="text-lg font-bold text-slate-900 mt-1 truncate">-</p>
+                            </div>
+                            <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-trophy"></i>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-circle-check"></i>
-                            </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
                             <div>
-                                <span class="text-xs font-semibold text-slate-500">Tingkat Partisipasi</span>
-                                <h4 id="stat-tingkat-partisipasi" class="text-2xl font-extrabold text-slate-900">100%</h4>
+                                <p class="text-xs font-medium text-slate-500">Status Kehadiran Hari Ini</p>
+                                <p id="stat-hari-ini" class="text-2xl font-black text-emerald-600 mt-1">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-calendar-day"></i>
                             </div>
                         </div>
                     </div>
 
                     <!-- Visual Charts Grid -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Chart 1: Presensi per Kelas -->
                         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                            <div class="flex justify-between items-center mb-4">
-                                <h4 class="font-bold text-slate-900 text-sm"><i class="fa-solid fa-chart-bar text-brand-600 mr-2"></i> Grafik Jumlah Presensi per Kelas</h4>
-                                <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Realtime</span>
-                            </div>
-                            <div class="relative h-64 w-full">
-                                <canvas id="chart-presensi-kelas"></canvas>
+                            <h4 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                                <i class="fa-solid fa-chart-bar text-brand-600 mr-2"></i> Rekap Kehadiran Siswa per Kelas
+                            </h4>
+                            <div class="h-64 relative">
+                                <canvas id="chartKehadiranKelas"></canvas>
                             </div>
                         </div>
 
-                        <!-- Chart 2: Distribusi Akses Modul -->
                         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                            <div class="flex justify-between items-center mb-4">
-                                <h4 class="font-bold text-slate-900 text-sm"><i class="fa-solid fa-chart-pie text-purple-600 mr-2"></i> Distribusi Akses Media Pembelajaran</h4>
-                                <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded">Statistik</span>
-                            </div>
-                            <div class="relative h-64 w-full flex items-center justify-center">
-                                <canvas id="chart-akses-modul"></canvas>
+                            <h4 class="text-base font-bold text-slate-900 mb-4 flex items-center">
+                                <i class="fa-solid fa-chart-pie text-brand-600 mr-2"></i> Distribusi Jenis Aktivitas Siswa
+                            </h4>
+                            <div class="h-64 relative">
+                                <canvas id="chartJenisAktivitas"></canvas>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Data Table Presensi Kehadiran -->
+                    <!-- TABEL REKAPITULASI PRESENSI KEHADIRAN & TUGAS SISWA -->
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                        <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <div>
-                                <h4 class="font-bold text-slate-900 text-base"><i class="fa-solid fa-table-list text-brand-600 mr-2"></i> Tabel Rekapitulasi Presensi Kehadiran Murid</h4>
-                                <p class="text-xs text-slate-500">Daftar siswa yang telah mengisi presensi dan mempelajari media.</p>
+                                <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">
+                                    <i class="fa-solid fa-table-list mr-1"></i> Data Realtime Siswa
+                                </span>
+                                <h3 class="text-xl font-bold text-slate-900 mt-0.5">Tabel Rekapitulasi Presensi Kehadiran & Tugas Siswa</h3>
+                                <p class="text-xs text-slate-500 mt-1">Daftar siswa yang telah mengisi presensi dan melampirkan berkas tugas. Gunakan tombol preview untuk melihat tugas atau hapus jika diperlukan.</p>
                             </div>
-                            <div class="relative w-full sm:w-64">
-                                <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-                                <input type="text" id="presensi-search" onkeyup="filterPresensiTable()" placeholder="Cari nama atau kelas..." class="w-full pl-9 pr-3 py-1.5 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <div class="flex items-center space-x-2">
+                                <div class="relative">
+                                    <i class="fa-solid fa-search absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                                    <input type="text" id="rekap-search-input" onkeyup="renderRekapTable()" placeholder="Cari nama / kelas..." class="pl-8 pr-3 py-1.5 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                </div>
+                                <button onclick="resetPresensiDataPrompt()" class="text-xs bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-semibold px-3 py-1.5 rounded-xl transition inline-flex items-center">
+                                    <i class="fa-solid fa-rotate-left mr-1"></i> Reset Data
+                                </button>
                             </div>
                         </div>
+
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs text-slate-600">
-                                <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px]">
-                                    <tr>
-                                        <th class="py-3 px-4">No</th>
-                                        <th class="py-3 px-4">Waktu Presensi</th>
-                                        <th class="py-3 px-4">Nama Siswa</th>
-                                        <th class="py-3 px-4">Kelas</th>
-                                        <th class="py-3 px-4">Modul / Media</th>
-                                        <th class="py-3 px-4">Jenis Aktivitas</th>
-                                        <th class="py-3 px-4">Catatan Pemahaman</th>
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                                        <th class="py-3.5 px-4 text-center">No</th>
+                                        <th class="py-3.5 px-4">Waktu & Tanggal</th>
+                                        <th class="py-3.5 px-4">Nama Siswa</th>
+                                        <th class="py-3.5 px-4">Kelas</th>
+                                        <th class="py-3.5 px-4">Modul / Topik</th>
+                                        <th class="py-3.5 px-4">Aktivitas</th>
+                                        <th class="py-3.5 px-4 text-center">Lampiran Tugas</th>
+                                        <th class="py-3.5 px-4 text-center">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody id="presensi-table-body" class="divide-y divide-slate-100">
+                                <tbody id="rekap-table-body" class="divide-y divide-slate-100 text-xs">
                                     <!-- Populated dynamically via JS -->
                                 </tbody>
                             </table>
@@ -934,888 +921,919 @@
                     </div>
                 </div>
 
-                <!-- FORM UPLOAD GURU BK (Hidden by default) -->
-                <div id="materi-upload-section" class="hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm mb-12">
+                <!-- SUB-SECTION D: UNGGAH MEDIA (GURU BK) -->
+                <div id="materi-guru-section" class="hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm max-w-3xl mx-auto">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
-                        <div>
-                            <span class="text-xs font-bold text-brand-600 uppercase tracking-wider"><i class="fa-solid fa-lock mr-1"></i> Area Guru BK</span>
-                            <h3 class="text-xl font-bold text-slate-900 mt-0.5">Unggah Media Pembelajaran (PDF / Video HD)</h3>
-                        </div>
-                        <span class="text-xs bg-brand-50 text-brand-700 px-3 py-1 rounded-full font-medium border border-brand-200 hidden sm:inline-block">
-                            Dukungan File Besar (Hingga 500MB) & Link Direct
-                        </span>
+                        <h3 class="text-xl font-bold text-slate-900"><i class="fa-solid fa-cloud-arrow-up text-brand-600 mr-2"></i> Tambah Materi / Modul Baru</h3>
+                        <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-bold"><i class="fa-solid fa-user-shield mr-1"></i> Khusus Guru BK</span>
                     </div>
 
-                    <form id="form-upload-modul" onsubmit="handleModuleUpload(event)" class="space-y-5">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <form id="form-upload-materi" onsubmit="handleUploadMateri(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Materi / Media *</label>
+                            <input type="text" id="upload-judul" required placeholder="Contoh: Modul Kesiapan Wawancara Kerja" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Judul Media Pembelajaran *</label>
-                                <input type="text" id="upload-title" required placeholder="Contoh: Video Simulasi Wawancara Kerja SMK" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Tipe Media *</label>
-                                <select id="upload-type" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                    <option value="pdf">Dokumen PDF / Modul Ajar</option>
-                                    <option value="video">Video Pembelajaran (MP4 / Link Video)</option>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori *</label>
+                                <select id="upload-kategori" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="karir">Bimbingan Karir & BMW</option>
+                                    <option value="mental">Kesehatan Mental & Pribadi</option>
+                                    <option value="belajar">Bimbingan Belajar Kejuruan</option>
+                                    <option value="sosial">Bimbingan Sosial & Komunikasi</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Bimbingan *</label>
-                                <select id="upload-category" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                    <option value="">-- Pilih Kategori --</option>
-                                    <option value="karir">Bimbingan Karir & BMW</option>
-                                    <option value="mental">Kesehatan Mental & Emosi</option>
-                                    <option value="belajar">Bimbingan Belajar Kejuruan</option>
-                                    <option value="sosial">Bimbingan Pribadi & Sosial</option>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Tipe Format *</label>
+                                <select id="upload-tipe" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                    <option value="doc">Dokumen / PDF / Panduan</option>
+                                    <option value="video">Video Pembelajaran (YouTube Link)</option>
                                 </select>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Singkat & Instruksi *</label>
-                            <textarea id="upload-desc" rows="2" required placeholder="Jelaskan ringkasan isi video/dokumen pembelajaran ini..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">URL / Link Sumber File / Video *</label>
+                            <input type="url" id="upload-url" required placeholder="https://..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
                         </div>
 
-                        <!-- Sumber Media Upload (File / Video Link) -->
-                        <div class="space-y-3">
-                            <label class="block text-xs font-semibold text-slate-700">Sumber Media Pembelajaran *</label>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <!-- Option A: Direct File Upload -->
-                                <div class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-xl p-5 text-center bg-slate-50 transition cursor-pointer flex flex-col justify-center items-center" onclick="document.getElementById('upload-file-input').click()">
-                                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-brand-600 mb-2" id="upload-icon-display"></i>
-                                    <p class="text-xs font-bold text-slate-700" id="file-chosen-text">Klik untuk memilih file PDF atau Video</p>
-                                    <p class="text-[11px] text-slate-400 mt-1">Dukungan format: .PDF, .DOC, .MP4, .WEBM (Hingga 500MB)</p>
-                                    <input type="file" id="upload-file-input" accept=".pdf,.doc,.docx,.mp4,.webm" onchange="updateFileNameText(this)" class="hidden">
-                                </div>
-
-                                <!-- Option B: External URL / Drive Link -->
-                                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 flex flex-col justify-center">
-                                    <span class="text-xs font-bold text-slate-700 mb-1"><i class="fa-solid fa-link text-brand-600 mr-1"></i> Opsi Tautan Video / Google Drive</span>
-                                    <p class="text-[11px] text-slate-500 mb-2">Gunakan link YouTube, Drive, atau server video sekolah jika file video berukuran sangat besar.</p>
-                                    <input type="url" id="upload-url-input" placeholder="https://www.youtube.com/watch?v=... atau Tautan Drive" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
-                                </div>
-                            </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Deskripsi Singkat</label>
+                            <textarea id="upload-deskripsi" rows="3" placeholder="Jelaskan secara singkat isi materi yang dipelajari siswa..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
                         </div>
 
-                        <!-- Upload Progress Simulation Bar -->
-                        <div id="upload-progress-container" class="hidden space-y-1">
-                            <div class="flex justify-between text-xs text-slate-600 font-semibold">
-                                <span id="upload-progress-text"><i class="fa-solid fa-spinner fa-spin text-brand-600 mr-1"></i> Mengunggah media pembelajaran...</span>
-                                <span id="upload-progress-percent">0%</span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
-                                <div id="upload-progress-bar" class="bg-brand-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end space-x-3 pt-2">
-                            <button type="button" onclick="switchMateriMode('murid')" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-600 font-semibold text-xs hover:bg-slate-100 transition">
-                                Batal
-                            </button>
-                            <button type="submit" id="btn-submit-upload" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs shadow-md transition inline-flex items-center">
-                                <i class="fa-solid fa-paper-plane mr-2"></i> Publikasikan Media
-                            </button>
-                        </div>
+                        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow transition">
+                            <i class="fa-solid fa-plus-circle mr-2"></i> Publikasikan Materi Baru
+                        </button>
                     </form>
-                </div>
-
-                <!-- Container Modul & Media Pembelajaran -->
-                <div id="materi-modules-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"></div>
-                
-                <!-- Empty State jika tidak ada modul -->
-                <div id="materi-empty-state" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200">
-                    <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
-                    <p class="text-slate-500 font-medium text-sm">Materi atau media pembelajaran tidak ditemukan.</p>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- Toast Notification Element -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden items-center bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl border border-slate-700 text-sm space-x-3 transition-all duration-300">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-        <span id="toast-message">Notifikasi berhasil dikirim</span>
-    </div>
-
-    <!-- Footer Section -->
-    <footer class="bg-navy-900 text-slate-400 py-8 border-t border-slate-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs space-y-2">
-            <p class="font-semibold text-slate-300">Pusat Bimbingan & Konseling SMKS Pemuda 3 Kesamben Blitar</p>
-            <p>&copy; 2026 BK Digital SMK. Mewujudkan Generasi Mandiri, Berkarakter & Siap Kerja.</p>
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-white border-t border-slate-800 pt-12 pb-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-slate-800">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="font-extrabold text-lg">BK SMKS Pemuda 3 Kesamben</span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Layanan Bimbingan Konseling Digital resmi SMKS Pemuda 3 Kesamben, Kab. Blitar. Menyiapkan generasi penerus penerbang cita-cita bangsa.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Layanan Utama</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="#" onclick="showSection('karir')" class="hover:text-brand-500 transition">Bimbingan Karir & PKL</a></li>
+                        <li><a href="#" onclick="showSection('konseling')" class="hover:text-brand-500 transition">Konseling Individual Online</a></li>
+                        <li><a href="#" onclick="showSection('curhat')" class="hover:text-brand-500 transition">Kotak Curhat Anonim</a></li>
+                        <li><a href="#" onclick="showSection('materi')" class="hover:text-brand-500 transition">Materi & Form Presensi Siswa</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Kontak & Lokasi</h4>
+                    <p class="text-xs text-slate-400 mb-2"><i class="fa-solid fa-location-dot text-brand-500 mr-2"></i> Jl. Raya Kesamben No. 03, Kesamben, Blitar, Jawa Timur</p>
+                    <p class="text-xs text-slate-400 mb-2"><i class="fa-brands fa-whatsapp text-emerald-400 mr-2"></i> +62 812-3456-7890 (BK Center)</p>
+                    <p class="text-xs text-slate-400"><i class="fa-regular fa-envelope text-brand-500 mr-2"></i> bk@smkpemuda3kesamben.sch.id</p>
+                </div>
+            </div>
+            <div class="pt-6 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between">
+                <p>&copy; 2026 Pusat BK SMKS Pemuda 3 Kesamben Blitar. Hak Cipta Dilindungi.</p>
+                <p class="mt-2 sm:mt-0 text-[11px] text-slate-600">Sistem Informasi Konseling & Kehadiran Tugas Siswa</p>
+            </div>
         </div>
     </footer>
 
-    <!-- Document / Video Preview Modal for Students -->
-    <div id="preview-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-200 relative my-8">
-            <button onclick="closePreviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 z-10">
+    <!-- MODAL AUTH: ADMIN LOGIN GURU BK (DIPERBARUI: KATA DEFAULT HINT TELAH DIHAPUS) -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-5 relative">
+            <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2 rounded-xl transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
 
-            <div class="flex items-center space-x-3 mb-4 pr-8">
-                <div id="modal-file-icon" class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                    <i class="fa-solid fa-file-pdf"></i>
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 bg-gradient-to-tr from-brand-600 to-teal-400 text-white rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-md">
+                    <i class="fa-solid fa-user-shield"></i>
                 </div>
+                <h3 class="text-xl font-bold text-slate-900">Autentikasi Guru BK</h3>
+                <p class="text-xs text-slate-500">Masukkan username & password admin untuk mengakses Fitur Rekapitulasi, Grafik, & Unggah Media.</p>
+            </div>
+
+            <form id="form-admin-login" onsubmit="handleAdminLogin(event)" class="space-y-4">
                 <div>
-                    <span id="modal-category-badge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Kategori</span>
-                    <h3 id="modal-title" class="font-extrabold text-slate-900 text-lg leading-tight mt-0.5">Judul Dokumen</h3>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Username Admin</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3 top-3 text-slate-400 text-xs"></i>
+                        <input type="text" id="login-username" required placeholder="Masukkan username" class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3 top-3 text-slate-400 text-xs"></i>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+
+                <div id="login-error-msg" class="hidden text-xs text-red-600 font-bold bg-red-50 p-2.5 rounded-lg border border-red-200 text-center">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Username atau password salah!
+                </div>
+
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow transition inline-flex items-center justify-center">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Masuk Sebagai Admin
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 1: PREVIEW LAMPIRAN TUGAS SISWA -->
+    <div id="preview-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200">
+            <!-- Modal Header -->
+            <div class="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center space-x-3 overflow-hidden">
+                    <div id="preview-modal-icon" class="w-10 h-10 rounded-xl bg-brand-500 text-white flex items-center justify-center text-lg flex-shrink-0">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <div class="truncate">
+                        <h3 id="preview-modal-title" class="text-base font-bold truncate">Preview Lampiran Tugas Siswa</h3>
+                        <p id="preview-modal-subtitle" class="text-xs text-slate-400 truncate">Nama Siswa - Kelas</p>
+                    </div>
+                </div>
+                <button onclick="closePreviewModal()" class="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Area -->
+            <div class="p-6 overflow-y-auto flex-grow bg-slate-100 flex flex-col items-center justify-center min-h-[300px]">
+                <!-- Metadata Card -->
+                <div class="w-full bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-4 text-xs space-y-2">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-slate-600">
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-medium">Nama Siswa</span>
+                            <strong id="preview-meta-nama" class="text-slate-800 font-semibold">-</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-medium">Kelas</span>
+                            <strong id="preview-meta-kelas" class="text-slate-800 font-semibold">-</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-medium">Topik Modul</span>
+                            <strong id="preview-meta-modul" class="text-slate-800 font-semibold truncate block">-</strong>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] text-slate-400 font-medium">Ukuran File</span>
+                            <strong id="preview-meta-size" class="text-slate-800 font-semibold">-</strong>
+                        </div>
+                    </div>
+                    <div id="preview-meta-catatan-wrapper" class="pt-2 border-t border-slate-100 hidden">
+                        <span class="block text-[10px] text-slate-400 font-medium">Catatan / Ringkasan Siswa:</span>
+                        <p id="preview-meta-catatan" class="text-slate-700 italic bg-slate-50 p-2 rounded border border-slate-200 mt-0.5"></p>
+                    </div>
+                </div>
+
+                <!-- Preview Container -->
+                <div id="preview-content-box" class="w-full bg-white rounded-xl border border-slate-200 p-4 flex flex-col items-center justify-center min-h-[260px] shadow-inner relative overflow-hidden">
+                    <!-- Dynamic preview loaded via JS -->
                 </div>
             </div>
 
-            <!-- Dynamic Media Viewer Container -->
-            <div id="modal-media-viewer" class="mb-5 overflow-hidden rounded-xl border border-slate-200 bg-slate-950 flex items-center justify-center min-h-[220px]">
-                <!-- Video player or PDF preview dynamically injected here -->
-            </div>
-
-            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 space-y-3">
-                <p id="modal-desc" class="text-xs text-slate-600 leading-relaxed">Deskripsi dokumen...</p>
-                <div class="flex flex-wrap gap-4 text-xs text-slate-500 pt-2 border-t border-slate-200">
-                    <span><i class="fa-regular fa-file text-brand-600 mr-1"></i> Tipe: <strong id="modal-file-type">PDF</strong></span>
-                    <span><i class="fa-regular fa-hard-drive text-brand-600 mr-1"></i> Ukuran: <strong id="modal-file-size">1.2 MB</strong></span>
-                    <span><i class="fa-regular fa-eye text-brand-600 mr-1"></i> Diakses: <strong id="modal-download-count">12x</strong></span>
+            <!-- Modal Footer -->
+            <div class="p-4 bg-white border-t border-slate-200 flex items-center justify-between">
+                <span id="preview-modal-filename" class="text-xs text-slate-500 font-medium truncate max-w-xs sm:max-w-md">file.pdf</span>
+                <div class="flex items-center space-x-2">
+                    <a id="preview-download-btn" href="#" download="lampiran_tugas.pdf" target="_blank" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition inline-flex items-center">
+                        <i class="fa-solid fa-download mr-1.5"></i> Unduh File
+                    </a>
+                    <button onclick="closePreviewModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition">
+                        Tutup
+                    </button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="flex justify-end space-x-3">
-                <button onclick="closePreviewModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">Tutup</button>
-                <button id="modal-download-btn" onclick="" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow inline-flex items-center">
-                    <i class="fa-solid fa-download mr-1.5"></i> Unduh Media
+    <!-- MODAL 2: KONFIRMASI HAPUS DATA -->
+    <div id="delete-confirm-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4">
+            <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">Hapus Rekap Presensi?</h3>
+                <p id="delete-modal-msg" class="text-xs text-slate-600 mt-1">
+                    Apakah Anda yakin ingin menghapus data presensi dan berkas tugas milik <strong id="delete-target-nama">Siswa</strong>?
+                </p>
+            </div>
+            <div class="flex items-center justify-center space-x-3 pt-2">
+                <button onclick="closeDeleteModal()" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition">
+                    Batal
+                </button>
+                <button id="confirm-delete-btn" onclick="executeDeleteRecord()" class="w-1/2 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition shadow">
+                    Ya, Hapus Data
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic Section -->
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
     <script>
+        // Global Authentication State
+        let isAdminLoggedIn = sessionStorage.getItem('bk_admin_logged_in') === 'true';
+        let pendingAdminTab = null;
+
+        // Global Data Models
         let modulesData = [
             {
-                id: 1,
-                title: "Video Tutorial: Simulasi Wawancara Kerja & Tips Lolos HRD DUDI",
-                category: "karir",
-                categoryLabel: "Karir & BMW",
-                description: "Video edukasi interaktif langkah-langkah menjawab pertanyaan wawancara kerja, gestur tubuh, dan etika berkomunikasi saat tes DUDI.",
-                fileType: "mp4",
-                mediaType: "video",
-                fileName: "Video_Simulasi_Wawancara_SMK.mp4",
-                fileSize: "145.0 MB",
-                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                downloads: 84,
-                date: "2026-03-12",
-                author: "Guru BK SMKS Pemuda 3"
+                id: 'm1',
+                judul: 'Panduan Penulisan CV ATS & Surat Lamaran Kerja SMK',
+                kategori: 'karir',
+                tipe: 'doc',
+                deskripsi: 'Panduan praktis dan contoh format CV standar ATS untuk melamar kerja ke industri/DUDI bagi kelulusan SMK.',
+                url: '#'
             },
             {
-                id: 2,
-                title: "Panduan Membuat CV ATS-Friendly & Portofolio SMK",
-                category: "karir",
-                categoryLabel: "Karir & BMW",
-                description: "Modul lengkap langkah-langkah praktis menyusun Curriculum Vitae format ATS-friendly serta penyusunan portofolio karya kejuruan.",
-                fileType: "pdf",
-                mediaType: "doc",
-                fileName: "Modul_CV_ATS_SMK.pdf",
-                fileSize: "2.4 MB",
-                downloads: 48,
-                date: "2026-03-10",
-                author: "Guru BK SMKS Pemuda 3"
+                id: 'm2',
+                judul: 'Video Pembekalan Etika & Mental Praktik Kerja Lapangan (PKL)',
+                kategori: 'karir',
+                tipe: 'video',
+                deskripsi: 'Tayangan edukasi tentang tata krama, kedisiplinan, komunikasi profesional, dan K3LH di dunia industri.',
+                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
             },
             {
-                id: 3,
-                title: "Video Webinar: Mengelola Stres & Menjaga Mental Sehat Masa PKL",
-                category: "mental",
-                categoryLabel: "Kesehatan Mental",
-                description: "Rekaman video bimbingan kelompok mengenai teknik relaksasi mandiri, mengontrol emosi, serta membangun resiliensi di lingkungan industri.",
-                fileType: "mp4",
-                mediaType: "video",
-                fileName: "Webinar_Kesehatan_Mental_PKL.mp4",
-                fileSize: "280.5 MB",
-                videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
-                downloads: 62,
-                date: "2026-03-08",
-                author: "Guru BK SMKS Pemuda 3"
+                id: 'm3',
+                judul: 'Modul Manajemen Stres & Regulasi Emosi Remaja',
+                kategori: 'mental',
+                tipe: 'doc',
+                deskripsi: 'Strategi praktis mengelola kecemasan, kelelahan belajar, serta menjaga kebahagiaan mental siswa.',
+                url: '#'
             },
             {
-                id: 4,
-                title: "Template Business Model Canvas (BMC) Wirausaha Muda SMK",
-                category: "karir",
-                categoryLabel: "Karir & BMW",
-                description: "Modul kerja dan lembar skema perancangan ide wirausaha kejuruan kreatif berbasis produk/jasa jurusan.",
-                fileType: "doc",
-                mediaType: "doc",
-                fileName: "Template_BMC_Wirausaha.doc",
-                fileSize: "850 KB",
-                downloads: 19,
-                date: "2026-02-28",
-                author: "Guru BK SMKS Pemuda 3"
-            },
-            {
-                id: 5,
-                title: "Modul Strategi Belajar Efektif & Manajemen Waktu Praktikum",
-                category: "belajar",
-                categoryLabel: "Belajar Kejuruan",
-                description: "Kiat membagi waktu antara teori, praktikum bengkel/lab, dan persiapan kerja kelompok tanpa mudah lelah.",
-                fileType: "pdf",
-                mediaType: "doc",
-                fileName: "Modul_Manajemen_Waktu_Belajar.pdf",
-                fileSize: "1.8 MB",
-                downloads: 27,
-                date: "2026-02-15",
-                author: "Guru BK SMKS Pemuda 3"
+                id: 'm4',
+                judul: 'E-Book Persiapan SNBP/SNBT & KIP-Kuliah Vokasi',
+                kategori: 'belajar',
+                tipe: 'doc',
+                deskripsi: 'Langkah demi langkah mendaftar perguruan tinggi negeri vokasi / politeknik negeri dengan KIP-Kuliah.',
+                url: '#'
             }
         ];
 
-        let presensiData = [
-            { id: 1, nama: "Ahmad Rizky", kelas: "XI RPL 1", modulTitle: "Panduan Membuat CV ATS-Friendly & Portofolio SMK", aktivitas: "Telah Membaca/Melihat Preview", waktu: "2026-03-24 08:30", catatan: "Paham urutan penulisan CV ATS" },
-            { id: 2, nama: "Budi Santoso", kelas: "XII TKR 1", modulTitle: "Video Tutorial: Simulasi Wawancara Kerja & Tips Lolos HRD DUDI", aktivitas: "Menonton Video Pembelajaran", waktu: "2026-03-24 09:15", catatan: "Sangat membantu untuk persiapan tes kerja" },
-            { id: 3, nama: "Siti Nurhaliza", kelas: "XI RPL 1", modulTitle: "Video Webinar: Mengelola Stres & Menjaga Mental Sehat Masa PKL", aktivitas: "Menonton Video Pembelajaran", waktu: "2026-03-24 10:00", catatan: "Mengerti teknik relaksasi saat lelah PKL" },
-            { id: 4, nama: "Dewi Anggraini", kelas: "X TKJ 1", modulTitle: "Modul Strategi Belajar Efektif & Manajemen Waktu Praktikum", aktivitas: "Meninggalkan Feedback/Mengunduh Modul", waktu: "2026-03-23 11:20", catatan: "Siap menerapkan jadwal praktikum" },
-            { id: 5, nama: "Eko Prasetyo", kelas: "XII TKR 1", modulTitle: "Template Business Model Canvas (BMC) Wirausaha Muda SMK", aktivitas: "Meninggalkan Feedback/Mengunduh Modul", waktu: "2026-03-23 13:45", catatan: "Mencoba membuat BMC usaha bengkel" }
+        // Initial Presensi Data
+        let presensiData = JSON.parse(localStorage.getItem('bk_presensi_data')) || [
+            {
+                id: 'pres-1',
+                timestamp: '2026-07-28 08:30',
+                nama: 'Ahmad Rizky Pratama',
+                kelas: 'X TM',
+                modul: 'Panduan Penulisan CV ATS & Surat Lamaran Kerja SMK',
+                aktivitas: 'Mengumpulkan Dokumen Tugas',
+                catatan: 'Telah menyelesaikan draft CV ATS sesuai panduan modul.',
+                file: {
+                    name: 'CV_ATS_Ahmad_Rizky_XTM.pdf',
+                    size: '1.4 MB',
+                    type: 'application/pdf',
+                    dataUrl: null,
+                    isMock: true
+                }
+            },
+            {
+                id: 'pres-2',
+                timestamp: '2026-07-28 09:15',
+                nama: 'Siti Nurhaliza',
+                kelas: 'XI LK',
+                modul: 'Modul Manajemen Stres & Regulasi Emosi Remaja',
+                aktivitas: 'Mengumpulkan Dokumen Tugas',
+                catatan: 'Lembar refleksi manajemen stres harian.',
+                file: {
+                    name: 'Tugas_Refleksi_Siti_XI_LK.jpg',
+                    size: '2.8 MB',
+                    type: 'image/jpeg',
+                    dataUrl: 'https://placehold.co/800x600/0d9488/ffffff?text=Preview+Tugas+Siti+Nurhaliza+(XI+LK)',
+                    isMock: true
+                }
+            },
+            {
+                id: 'pres-3',
+                timestamp: '2026-07-28 10:00',
+                nama: 'Budi Santoso',
+                kelas: 'XII TO',
+                modul: 'Video Pembekalan Etika & Mental Praktik Kerja Lapangan (PKL)',
+                aktivitas: 'Menonton Video Pembelajaran',
+                catatan: 'Memahami pentingnya K3LH dan kedisiplinan di bengkel.',
+                file: null
+            }
         ];
 
-        let chartKelasInstance = null;
-        let chartModulInstance = null;
+        let selectedPresensiFile = null;
+        let deleteTargetId = null;
+        let chartKehadiran = null;
+        let chartAktivitas = null;
 
+        window.addEventListener('DOMContentLoaded', () => {
+            populateModulSelect();
+            renderModulesGrid();
+            updateAdminUIBadge();
+        });
+
+        // Section Navigation
         function showSection(sectionId) {
             document.querySelectorAll('.section-block').forEach(sec => sec.classList.add('hidden'));
-            const target = document.getElementById('section-' + sectionId);
+            const target = document.getElementById(`section-${sectionId}`);
             if (target) {
                 target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
-            // Update nav active styling
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-brand-600', 'font-bold', 'bg-slate-100');
-            });
-            const activeBtn = document.getElementById('nav-' + sectionId);
-            if (activeBtn) {
-                activeBtn.classList.add('text-brand-600', 'font-bold', 'bg-slate-100');
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Close mobile menu if open
-            const mob = document.getElementById('mobile-menu');
-            if (mob && !mob.classList.contains('hidden')) mob.classList.add('hidden');
-
-            if (sectionId === 'materi') {
-                renderModules(modulesData);
-                populatePresensiModulSelect();
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
             }
         }
 
         function toggleMobileMenu() {
-            const mob = document.getElementById('mobile-menu');
-            if (mob) mob.classList.toggle('hidden');
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
         function switchBMWTab(tabKey) {
-            document.querySelectorAll('.bmw-tab').forEach(t => {
-                t.classList.remove('text-brand-600', 'border-b-2', 'border-brand-600', 'font-bold');
-                t.classList.add('text-slate-500', 'font-semibold');
+            document.querySelectorAll('.bmw-tab').forEach(btn => {
+                btn.classList.remove('text-brand-600', 'border-b-2', 'border-brand-600', 'font-bold');
+                btn.classList.add('text-slate-500', 'font-semibold');
             });
-            const selectedTab = document.getElementById('tab-' + tabKey);
-            if (selectedTab) {
-                selectedTab.classList.add('text-brand-600', 'border-b-2', 'border-brand-600', 'font-bold');
-                selectedTab.classList.remove('text-slate-500');
-            }
+            document.querySelectorAll('.bmw-content').forEach(content => content.classList.add('hidden'));
 
-            document.querySelectorAll('.bmw-content').forEach(c => c.classList.add('hidden'));
-            const selectedContent = document.getElementById('bmw-content-' + tabKey);
-            if (selectedContent) selectedContent.classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabKey}`);
+            const activeContent = document.getElementById(`bmw-content-${tabKey}`);
+
+            if (activeBtn && activeContent) {
+                activeBtn.classList.add('text-brand-600', 'border-b-2', 'border-brand-600', 'font-bold');
+                activeBtn.classList.remove('text-slate-500');
+                activeContent.classList.remove('hidden');
+            }
         }
 
-        function renderModules(items) {
-            const grid = document.getElementById('materi-modules-grid');
-            const emptyState = document.getElementById('materi-empty-state');
-            if (!grid || !emptyState) return;
-
-            grid.innerHTML = '';
-
-            if (!items || items.length === 0) {
-                grid.classList.add('hidden');
-                emptyState.classList.remove('hidden');
+        // Mode switch with Admin Guard
+        function switchMateriMode(mode) {
+            // Guard for Admin-only tabs
+            if ((mode === 'grafik' || mode === 'guru') && !isAdminLoggedIn) {
+                pendingAdminTab = mode;
+                openAdminLoginModal();
                 return;
             }
 
-            grid.classList.remove('hidden');
-            emptyState.classList.add('hidden');
+            const muridSec = document.getElementById('materi-murid-section');
+            const presensiSec = document.getElementById('materi-presensi-section');
+            const grafikSec = document.getElementById('materi-grafik-section');
+            const guruSec = document.getElementById('materi-guru-section');
+            const searchContainer = document.getElementById('materi-search-container');
 
-            items.forEach(mod => {
-                const isVideo = mod.mediaType === 'video' || mod.fileType.toLowerCase() === 'mp4' || mod.fileType.toLowerCase() === 'webm';
-                
-                const fileBadgeColor = isVideo ? 'bg-purple-100 text-purple-700 border border-purple-200' : 
-                                      (mod.fileType.toLowerCase() === 'pdf' ? 'bg-red-100 text-red-600 border border-red-200' : 'bg-blue-100 text-blue-600 border border-blue-200');
-                
-                const playOverlay = isVideo ? `
-                    <div class="relative w-full h-36 bg-slate-900 rounded-xl mb-3 flex items-center justify-center overflow-hidden group cursor-pointer" onclick="openPreviewModal(${mod.id})">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10"></div>
-                        <div class="w-12 h-12 bg-brand-500/90 hover:bg-brand-500 text-white rounded-full flex items-center justify-center text-lg shadow-lg transform group-hover:scale-110 transition z-20">
-                            <i class="fa-solid fa-play ml-0.5"></i>
-                        </div>
-                        <span class="absolute bottom-2 left-2 z-20 text-[10px] font-bold text-white bg-slate-900/80 px-2 py-0.5 rounded backdrop-blur-sm">
-                            <i class="fa-solid fa-video mr-1 text-purple-400"></i> Video Pembelajaran HD
-                        </span>
-                        <span class="absolute bottom-2 right-2 z-20 text-[10px] font-bold text-white bg-slate-900/80 px-2 py-0.5 rounded backdrop-blur-sm">
-                            ${mod.fileSize}
-                        </span>
-                    </div>
-                ` : '';
+            [muridSec, presensiSec, grafikSec, guruSec].forEach(sec => sec.classList.add('hidden'));
 
-                const cardHtml = `
-                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between p-5">
-                        <div>
-                            ${playOverlay}
-                            <div class="flex items-center justify-between mb-3">
-                                <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-md bg-brand-50 text-brand-700 border border-brand-200">${mod.categoryLabel}</span>
-                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${fileBadgeColor}">${mod.fileType.toUpperCase()}</span>
-                            </div>
-                            <h4 class="font-bold text-slate-900 text-base mb-2 hover:text-brand-600 transition cursor-pointer" onclick="openPreviewModal(${mod.id})">${mod.title}</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed mb-4 line-clamp-3">${mod.description}</p>
-                        </div>
+            const tabs = ['murid', 'presensi', 'grafik', 'guru'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`materi-mode-${t}`);
+                if (btn) {
+                    btn.classList.remove('bg-brand-600', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                }
+            });
 
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                            <span><i class="fa-regular fa-eye text-brand-600 mr-1"></i> ${mod.downloads}x diakses</span>
-                            <div class="flex space-x-2">
-                                <button onclick="openPreviewModal(${mod.id})" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 rounded-lg text-xs font-bold transition">
-                                    <i class="fa-solid fa-circle-play mr-1"></i> Preview
-                                </button>
-                                <button onclick="triggerDownload(${mod.id})" class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-bold transition">
-                                    <i class="fa-solid fa-download"></i>
-                                </button>
-                            </div>
-                        </div>
+            const currentBtn = document.getElementById(`materi-mode-${mode}`);
+            if (currentBtn) {
+                currentBtn.classList.add('bg-brand-600', 'text-white', 'shadow-sm');
+                currentBtn.classList.remove('bg-slate-100', 'text-slate-700');
+            }
+
+            if (mode === 'murid') {
+                muridSec.classList.remove('hidden');
+                searchContainer.classList.remove('hidden');
+            } else if (mode === 'presensi') {
+                presensiSec.classList.remove('hidden');
+                searchContainer.classList.add('hidden');
+            } else if (mode === 'grafik') {
+                grafikSec.classList.remove('hidden');
+                searchContainer.classList.add('hidden');
+                renderRekapTable();
+                initCharts();
+            } else if (mode === 'guru') {
+                guruSec.classList.remove('hidden');
+                searchContainer.classList.add('hidden');
+            }
+        }
+
+        // Admin Auth Handlers
+        function openAdminLoginModal() {
+            document.getElementById('login-error-msg').classList.add('hidden');
+            document.getElementById('form-admin-login').reset();
+            document.getElementById('admin-login-modal').classList.remove('hidden');
+        }
+
+        function closeAdminLoginModal() {
+            document.getElementById('admin-login-modal').classList.add('hidden');
+            pendingAdminTab = null;
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('login-username');
+            const passwordInput = document.getElementById('login-password');
+            const errorMsg = document.getElementById('login-error-msg');
+
+            const u = usernameInput.value.trim();
+            const p = passwordInput.value.trim();
+
+            if (u === 'admin' && p === 'admin') {
+                isAdminLoggedIn = true;
+                sessionStorage.setItem('bk_admin_logged_in', 'true');
+                updateAdminUIBadge();
+                closeAdminLoginModal();
+                showToast('Login berhasil! Anda masuk sebagai Admin Guru BK.', 'success');
+
+                if (pendingAdminTab) {
+                    const tabToOpen = pendingAdminTab;
+                    pendingAdminTab = null;
+                    switchMateriMode(tabToOpen);
+                }
+            } else {
+                errorMsg.classList.remove('hidden');
+                usernameInput.value = '';
+                passwordInput.value = '';
+                usernameInput.focus();
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem('bk_admin_logged_in');
+            updateAdminUIBadge();
+            showToast('Anda telah keluar dari mode Admin Guru BK.', 'info');
+            switchMateriMode('murid');
+        }
+
+        function updateAdminUIBadge() {
+            const badge = document.getElementById('header-admin-badge');
+            if (!badge) return;
+            if (isAdminLoggedIn) {
+                badge.classList.remove('hidden');
+                badge.classList.add('flex');
+            } else {
+                badge.classList.add('hidden');
+                badge.classList.remove('flex');
+            }
+        }
+
+        function populateModulSelect() {
+            const select = document.getElementById('presensi-modul');
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Pilih Modul / Topik Pembelajaran --</option>';
+            modulesData.forEach(m => {
+                const opt = document.createElement('option');
+                opt.value = m.judul;
+                opt.textContent = `[${m.tipe.toUpperCase()}] ${m.judul}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderModulesGrid() {
+            const container = document.getElementById('materi-murid-section');
+            if (!container) return;
+
+            const searchVal = (document.getElementById('materi-search-input')?.value || '').toLowerCase();
+            const typeFilter = document.getElementById('materi-type-filter')?.value || 'all';
+            const catFilter = document.getElementById('materi-category-filter')?.value || 'all';
+
+            const filtered = modulesData.filter(m => {
+                const matchSearch = m.judul.toLowerCase().includes(searchVal) || m.deskripsi.toLowerCase().includes(searchVal);
+                const matchType = typeFilter === 'all' || m.tipe === typeFilter;
+                const matchCat = catFilter === 'all' || m.kategori === catFilter;
+                return matchSearch && matchType && matchCat;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200 p-8">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                        <p class="text-slate-600 font-bold text-sm">Tidak ada modul atau media yang cocok dengan pencarian Anda.</p>
                     </div>
                 `;
-                grid.innerHTML += cardHtml;
-            });
+                return;
+            }
+
+            container.innerHTML = filtered.map(m => `
+                <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full ${m.tipe === 'doc' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-blue-50 text-blue-600 border border-blue-200'}">
+                                <i class="${m.tipe === 'doc' ? 'fa-regular fa-file-pdf' : 'fa-solid fa-video'} mr-1"></i> ${m.tipe === 'doc' ? 'Dokumen PDF' : 'Video YouTube'}
+                            </span>
+                            <span class="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2 py-0.5 rounded capitalize">${m.kategori}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base mb-2 leading-snug">${m.judul}</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">${m.deskripsi}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <button onclick="bukaModul('${m.judul}')" class="text-xs text-brand-600 hover:text-brand-700 font-bold inline-flex items-center">
+                            <i class="fa-solid fa-eye mr-1"></i> Akses Modul
+                        </button>
+                        <button onclick="presensiPilihModul('${m.judul}')" class="text-xs bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 font-bold px-3 py-1.5 rounded-lg transition">
+                            <i class="fa-solid fa-check mr-1"></i> Isi Presensi
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function filterModules() {
-            const query = document.getElementById('materi-search-input').value.toLowerCase();
-            const typeFilter = document.getElementById('materi-type-filter').value;
-            const categoryFilter = document.getElementById('materi-category-filter').value;
-
-            const filtered = modulesData.filter(mod => {
-                const matchesSearch = mod.title.toLowerCase().includes(query) || mod.description.toLowerCase().includes(query);
-                const matchesType = typeFilter === 'all' || mod.mediaType === typeFilter;
-                const matchesCategory = categoryFilter === 'all' || mod.category === categoryFilter;
-
-                return matchesSearch && matchesType && matchesCategory;
-            });
-
-            renderModules(filtered);
+            renderModulesGrid();
         }
 
-        function openPreviewModal(id) {
-            const mod = modulesData.find(m => m.id === id);
-            if (!mod) return;
+        function bukaModul(judul) {
+            showToast(`Membuka modul: "${judul}"`, 'info');
+        }
 
-            document.getElementById('modal-title').innerText = mod.title;
-            document.getElementById('modal-category-badge').innerText = mod.categoryLabel;
-            document.getElementById('modal-desc').innerText = mod.description;
-            document.getElementById('modal-file-type').innerText = mod.fileType.toUpperCase();
-            document.getElementById('modal-file-size').innerText = mod.fileSize;
-            document.getElementById('modal-download-count').innerText = mod.downloads + 'x';
+        function presensiPilihModul(judul) {
+            switchMateriMode('presensi');
+            const select = document.getElementById('presensi-modul');
+            if (select) {
+                select.value = judul;
+            }
+        }
 
-            const viewer = document.getElementById('modal-media-viewer');
-            const iconContainer = document.getElementById('modal-file-icon');
+        function handlePresensiFileChange(input) {
+            const filePrompt = document.getElementById('presensi-file-prompt');
+            const fileInfo = document.getElementById('presensi-file-info');
+            const fileError = document.getElementById('presensi-file-error');
+            const fileNameEl = document.getElementById('presensi-file-name');
+            const fileSizeEl = document.getElementById('presensi-file-size');
 
-            if (mod.mediaType === 'video') {
-                iconContainer.className = "w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-bold flex-shrink-0 bg-purple-100 text-purple-600";
-                iconContainer.innerHTML = '<i class="fa-solid fa-video"></i>';
-                
-                viewer.innerHTML = `
-                    <video controls class="w-full h-auto max-h-[350px] rounded-lg">
-                        <source src="${mod.videoUrl || 'https://www.w3schools.com/html/mov_bbb.mp4'}" type="video/mp4">
-                        Browser Anda tidak mendukung pemutar video.
-                    </video>
-                `;
+            fileError.classList.add('hidden');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+
+                if (file.size > 10 * 1024 * 1024) {
+                    fileError.classList.remove('hidden');
+                    input.value = '';
+                    selectedPresensiFile = null;
+                    return;
+                }
+
+                const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+                fileNameEl.textContent = file.name;
+                fileSizeEl.textContent = `${sizeMb} MB`;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedPresensiFile = {
+                        name: file.name,
+                        size: `${sizeMb} MB`,
+                        type: file.type,
+                        dataUrl: e.target.result,
+                        isMock: false
+                    };
+                };
+                reader.readAsDataURL(file);
+
+                filePrompt.classList.add('hidden');
+                fileInfo.classList.remove('hidden');
+            }
+        }
+
+        function removePresensiFile(event) {
+            if (event) event.stopPropagation();
+            const input = document.getElementById('presensi-file-input');
+            const filePrompt = document.getElementById('presensi-file-prompt');
+            const fileInfo = document.getElementById('presensi-file-info');
+
+            if (input) input.value = '';
+            selectedPresensiFile = null;
+            if (filePrompt) filePrompt.classList.remove('hidden');
+            if (fileInfo) fileInfo.classList.add('hidden');
+        }
+
+        function handlePresensiSubmit(event) {
+            event.preventDefault();
+            const nama = document.getElementById('presensi-nama').value.trim();
+            const kelas = document.getElementById('presensi-kelas').value;
+            const modul = document.getElementById('presensi-modul').value;
+            const aktivitas = document.getElementById('presensi-aktivitas').value;
+            const catatan = document.getElementById('presensi-catatan').value.trim();
+
+            const now = new Date();
+            const timestamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+            const newRecord = {
+                id: 'pres-' + Date.now(),
+                timestamp: timestamp,
+                nama: nama,
+                kelas: kelas,
+                modul: modul,
+                aktivitas: aktivitas,
+                catatan: catatan,
+                file: selectedPresensiFile ? { ...selectedPresensiFile } : null
+            };
+
+            presensiData.unshift(newRecord);
+            localStorage.setItem('bk_presensi_data', JSON.stringify(presensiData));
+
+            document.getElementById('form-presensi-murid').reset();
+            removePresensiFile();
+
+            showToast('Presensi & lampiran tugas berhasil disimpan!', 'success');
+            
+            if (isAdminLoggedIn) {
+                switchMateriMode('grafik');
             } else {
-                iconContainer.className = "w-12 h-12 rounded-xl flex items-center justify-center text-2xl font-bold flex-shrink-0 bg-red-100 text-red-600";
-                iconContainer.innerHTML = '<i class="fa-solid fa-file-pdf"></i>';
+                switchMateriMode('murid');
+            }
+        }
 
-                viewer.innerHTML = `
-                    <div class="p-8 text-center text-white space-y-3 w-full bg-slate-900">
-                        <i class="fa-solid fa-file-lines text-5xl text-brand-400 mb-2"></i>
-                        <h4 class="font-bold text-sm">Pratinjau Dokumen Digital Ready</h4>
-                        <p class="text-xs text-slate-400 max-w-md mx-auto">Dokumen ini siap dibaca atau diunduh ke perangkat Anda.</p>
+        function renderRekapTable() {
+            const tableBody = document.getElementById('rekap-table-body');
+            if (!tableBody) return;
+
+            const searchVal = (document.getElementById('rekap-search-input')?.value || '').toLowerCase();
+
+            const filtered = presensiData.filter(item => {
+                return item.nama.toLowerCase().includes(searchVal) ||
+                       item.kelas.toLowerCase().includes(searchVal) ||
+                       item.modul.toLowerCase().includes(searchVal);
+            });
+
+            // Update stats
+            document.getElementById('stat-total-presensi').textContent = presensiData.length;
+            document.getElementById('stat-total-tugas').textContent = presensiData.filter(i => i.file).length;
+
+            const kelasCounts = {};
+            presensiData.forEach(i => {
+                kelasCounts[i.kelas] = (kelasCounts[i.kelas] || 0) + 1;
+            });
+            let topKelas = '-';
+            let maxCount = 0;
+            for (const [kls, count] of Object.entries(kelasCounts)) {
+                if (count > maxCount) {
+                    maxCount = count;
+                    topKelas = kls;
+                }
+            }
+            document.getElementById('stat-kelas-aktif').textContent = topKelas;
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            const countToday = presensiData.filter(i => i.timestamp.startsWith(todayStr)).length;
+            document.getElementById('stat-hari-ini').textContent = countToday;
+
+            if (filtered.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-8 text-slate-400 font-semibold">
+                            Belum ada data presensi yang sesuai.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = filtered.map((item, idx) => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-3 px-4 text-center font-bold text-slate-500">${idx + 1}</td>
+                    <td class="py-3 px-4 text-slate-600 font-medium whitespace-nowrap">${item.timestamp}</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">${item.nama}</td>
+                    <td class="py-3 px-4"><span class="bg-brand-50 text-brand-700 font-bold px-2 py-0.5 rounded text-[11px] border border-brand-200">${item.kelas}</span></td>
+                    <td class="py-3 px-4 text-slate-700 max-w-xs truncate">${item.modul}</td>
+                    <td class="py-3 px-4 text-slate-600">${item.aktivitas}</td>
+                    <td class="py-3 px-4 text-center">
+                        ${item.file ? `
+                            <button onclick="previewTaskFile('${item.id}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-bold px-2.5 py-1 rounded-lg transition inline-flex items-center text-[11px]">
+                                <i class="fa-solid fa-file-pdf mr-1 text-indigo-600"></i> ${item.file.name.length > 15 ? item.file.name.substring(0, 12) + '...' : item.file.name}
+                            </button>
+                        ` : `<span class="text-slate-400 text-[11px] italic">Tidak ada</span>`}
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <button onclick="openDeleteModal('${item.id}', '${item.nama}')" class="text-red-500 hover:text-red-700 p-1.5 rounded hover:bg-red-50 transition" title="Hapus Data">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function initCharts() {
+            const ctx1 = document.getElementById('chartKehadiranKelas')?.getContext('2d');
+            const ctx2 = document.getElementById('chartJenisAktivitas')?.getContext('2d');
+
+            if (!ctx1 || !ctx2) return;
+
+            // Aggregate data per kelas
+            const kelasMap = {};
+            presensiData.forEach(item => {
+                kelasMap[item.kelas] = (kelasMap[item.kelas] || 0) + 1;
+            });
+
+            // Aggregate data per aktivitas
+            const aktMap = {};
+            presensiData.forEach(item => {
+                aktMap[item.aktivitas] = (aktMap[item.aktivitas] || 0) + 1;
+            });
+
+            if (chartKehadiran) chartKehadiran.destroy();
+            if (chartAktivitas) chartAktivitas.destroy();
+
+            chartKehadiran = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(kelasMap).length ? Object.keys(kelasMap) : ['Belum ada data'],
+                    datasets: [{
+                        label: 'Jumlah Presensi',
+                        data: Object.values(kelasMap).length ? Object.values(kelasMap) : [0],
+                        backgroundColor: '#0d9488',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+                }
+            });
+
+            chartAktivitas = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(aktMap).length ? Object.keys(aktMap) : ['Belum ada data'],
+                    datasets: [{
+                        data: Object.values(aktMap).length ? Object.values(aktMap) : [1],
+                        backgroundColor: ['#0d9488', '#6366f1', '#f59e0b', '#ec4899', '#8b5cf6']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+        }
+
+        function previewTaskFile(id) {
+            const item = presensiData.find(i => i.id === id);
+            if (!item || !item.file) return;
+
+            document.getElementById('preview-meta-nama').textContent = item.nama;
+            document.getElementById('preview-meta-kelas').textContent = item.kelas;
+            document.getElementById('preview-meta-modul').textContent = item.modul;
+            document.getElementById('preview-meta-size').textContent = item.file.size;
+            document.getElementById('preview-modal-filename').textContent = item.file.name;
+
+            const catatanWrapper = document.getElementById('preview-meta-catatan-wrapper');
+            if (item.catatan) {
+                document.getElementById('preview-meta-catatan').textContent = item.catatan;
+                catatanWrapper.classList.remove('hidden');
+            } else {
+                catatanWrapper.classList.add('hidden');
+            }
+
+            const box = document.getElementById('preview-content-box');
+            const downloadBtn = document.getElementById('preview-download-btn');
+
+            if (item.file.dataUrl) {
+                downloadBtn.href = item.file.dataUrl;
+                downloadBtn.download = item.file.name;
+
+                if (item.file.type.startsWith('image/')) {
+                    box.innerHTML = `<img src="${item.file.dataUrl}" alt="Preview" class="max-h-72 object-contain rounded-lg shadow border border-slate-200">`;
+                } else if (item.file.type === 'application/pdf') {
+                    box.innerHTML = `<iframe src="${item.file.dataUrl}" class="w-full h-72 rounded-lg border border-slate-200"></iframe>`;
+                } else {
+                    box.innerHTML = `
+                        <div class="text-center p-6">
+                            <i class="fa-solid fa-file-lines text-5xl text-brand-600 mb-3"></i>
+                            <p class="text-sm font-bold text-slate-800">${item.file.name}</p>
+                            <p class="text-xs text-slate-500 mt-1">Gunakan tombol di bawah untuk mengunduh berkas ini.</p>
+                        </div>
+                    `;
+                }
+            } else {
+                downloadBtn.href = '#';
+                box.innerHTML = `
+                    <div class="text-center p-6 space-y-2">
+                        <div class="w-16 h-16 bg-brand-100 text-brand-700 rounded-2xl flex items-center justify-center mx-auto text-3xl">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">${item.file.name}</h4>
+                        <p class="text-xs text-slate-500 max-w-md mx-auto">Dokumen terenkripsi aman tersimpan di peladen internal BK SMKS Pemuda 3 Kesamben.</p>
                     </div>
                 `;
             }
-
-            const dlBtn = document.getElementById('modal-download-btn');
-            dlBtn.onclick = function() { triggerDownload(mod.id); };
 
             document.getElementById('preview-modal').classList.remove('hidden');
         }
 
         function closePreviewModal() {
-            const viewer = document.getElementById('modal-media-viewer');
-            if (viewer) viewer.innerHTML = '';
             document.getElementById('preview-modal').classList.add('hidden');
         }
 
-        function triggerDownload(id) {
-            const mod = modulesData.find(m => m.id === id);
-            if (mod) {
-                mod.downloads += 1;
-                renderModules(modulesData);
-                showToast(`Mengunduh berkas: ${mod.fileName}`);
+        function openDeleteModal(id, nama) {
+            deleteTargetId = id;
+            document.getElementById('delete-target-nama').textContent = nama;
+            document.getElementById('delete-confirm-modal').classList.remove('hidden');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-confirm-modal').classList.add('hidden');
+            deleteTargetId = null;
+        }
+
+        function executeDeleteRecord() {
+            if (!deleteTargetId) return;
+            presensiData = presensiData.filter(i => i.id !== deleteTargetId);
+            localStorage.setItem('bk_presensi_data', JSON.stringify(presensiData));
+            closeDeleteModal();
+            renderRekapTable();
+            initCharts();
+            showToast('Data presensi telah berhasil dihapus.', 'info');
+        }
+
+        function resetPresensiDataPrompt() {
+            if (confirm('Apakah Anda yakin ingin mereset seluruh data presensi ke kondisi awal?')) {
+                localStorage.removeItem('bk_presensi_data');
+                location.reload();
             }
         }
 
-        function switchMateriMode(mode) {
-            const btnMurid = document.getElementById('materi-mode-murid');
-            const btnPresensi = document.getElementById('materi-mode-presensi');
-            const btnGrafik = document.getElementById('materi-mode-grafik');
-            const btnGuru = document.getElementById('materi-mode-guru');
+        function handleUploadMateri(event) {
+            event.preventDefault();
+            const judul = document.getElementById('upload-judul').value.trim();
+            const kategori = document.getElementById('upload-kategori').value;
+            const tipe = document.getElementById('upload-tipe').value;
+            const url = document.getElementById('upload-url').value.trim();
+            const deskripsi = document.getElementById('upload-deskripsi').value.trim();
 
-            const searchContainer = document.getElementById('materi-search-container');
-            const modulesGrid = document.getElementById('materi-modules-grid');
-            const emptyState = document.getElementById('materi-empty-state');
-            const presensiSec = document.getElementById('materi-presensi-section');
-            const grafikSec = document.getElementById('materi-grafik-section');
-            const uploadSec = document.getElementById('materi-upload-section');
-
-            [btnMurid, btnPresensi, btnGrafik, btnGuru].forEach(b => {
-                if (b) {
-                    b.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
-                }
+            modulesData.unshift({
+                id: 'm-' + Date.now(),
+                judul: judul,
+                kategori: kategori,
+                tipe: tipe,
+                deskripsi: deskripsi || 'Materi baru yang dipublikasikan oleh Guru BK.',
+                url: url
             });
 
-            // Hide all sub views
-            if (modulesGrid) modulesGrid.classList.add('hidden');
-            if (emptyState) emptyState.classList.add('hidden');
-            if (presensiSec) presensiSec.classList.add('hidden');
-            if (grafikSec) grafikSec.classList.add('hidden');
-            if (uploadSec) uploadSec.classList.add('hidden');
-            if (searchContainer) searchContainer.classList.add('hidden');
-
-            if (mode === 'murid') {
-                if (btnMurid) btnMurid.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-brand-600 text-white shadow-sm transition";
-                if (searchContainer) searchContainer.classList.remove('hidden');
-                renderModules(modulesData);
-            } else if (mode === 'presensi') {
-                if (btnPresensi) btnPresensi.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-brand-600 text-white shadow-sm transition";
-                if (presensiSec) presensiSec.classList.remove('hidden');
-            } else if (mode === 'grafik') {
-                if (btnGrafik) btnGrafik.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-brand-600 text-white shadow-sm transition";
-                if (grafikSec) grafikSec.classList.remove('hidden');
-                renderPresensiTable();
-                initPresensiCharts();
-            } else if (mode === 'guru') {
-                if (btnGuru) btnGuru.className = "px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm bg-brand-600 text-white shadow-sm transition";
-                if (uploadSec) uploadSec.classList.remove('hidden');
-            }
+            populateModulSelect();
+            renderModulesGrid();
+            document.getElementById('form-upload-materi').reset();
+            showToast('Materi baru berhasil dipublikasikan!', 'success');
+            switchMateriMode('murid');
         }
 
-        function populatePresensiModulSelect() {
-            const select = document.getElementById('presensi-modul');
-            if (!select) return;
-            select.innerHTML = '';
-            modulesData.forEach(m => {
-                select.innerHTML += `<option value="${m.title}">${m.title} (${m.fileType.toUpperCase()})</option>`;
-            });
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            document.getElementById('form-konseling').reset();
+            showToast('Pendaftaran konseling Anda berhasil dikirim! Guru BK akan menghubungi via WhatsApp.', 'success');
         }
 
-        function handlePresensiSubmit(e) {
-            e.preventDefault();
-            const nama = document.getElementById('presensi-nama').value.trim();
-            const kelas = document.getElementById('presensi-kelas').value;
-            const modulTitle = document.getElementById('presensi-modul').value;
-            const aktivitas = document.getElementById('presensi-aktivitas').value;
-            const catatan = document.getElementById('presensi-catatan').value.trim() || 'Materi telah dipelajari dengan baik';
-
-            const now = new Date();
-            const waktuStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0') + ' ' + String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-
-            const newPresensi = {
-                id: Date.now(),
-                nama: nama,
-                kelas: kelas,
-                modulTitle: modulTitle,
-                aktivitas: aktivitas,
-                waktu: waktuStr,
-                catatan: catatan
-            };
-
-            presensiData.unshift(newPresensi);
-            showToast(`Presensi berhasil dicatat untuk ${nama} (${kelas})!`);
-            e.target.reset();
-
-            const matchedMod = modulesData.find(m => m.title === modulTitle);
-            if (matchedMod) {
-                matchedMod.downloads += 1;
-            }
-
-            switchMateriMode('grafik');
+        function handleCurhatSubmit(event) {
+            event.preventDefault();
+            document.getElementById('form-curhat').reset();
+            showToast('Curhatan anonim berhasil dikirim dengan rahasia terjamin. Terima kasih telah berbagi!', 'success');
         }
 
-        function renderPresensiTable(data = presensiData) {
-            const tbody = document.getElementById('presensi-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
 
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-slate-400">Belum ada rekap data presensi.</td></tr>`;
-                return;
-            }
+            const toast = document.createElement('div');
+            toast.className = `pointer-events-auto flex items-center space-x-3 px-4 py-3 rounded-xl shadow-xl text-xs font-bold text-white transition-all transform translate-y-2 opacity-0 ${
+                type === 'success' ? 'bg-emerald-600' : type === 'error' ? 'bg-red-600' : 'bg-slate-800'
+            }`;
 
-            data.forEach((p, idx) => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition";
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-slate-500">${idx + 1}</td>
-                    <td class="py-3 px-4 font-mono text-[11px]">${p.waktu}</td>
-                    <td class="py-3 px-4 font-bold text-slate-900">${p.nama}</td>
-                    <td class="py-3 px-4"><span class="bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold border border-brand-200 text-[10px]">${p.kelas}</span></td>
-                    <td class="py-3 px-4 max-w-xs truncate" title="${p.modulTitle}">${p.modulTitle}</td>
-                    <td class="py-3 px-4"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-medium">${p.aktivitas}</span></td>
-                    <td class="py-3 px-4 italic text-slate-500 max-w-xs truncate" title="${p.catatan}">${p.catatan}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            updatePresensiStats();
-        }
-
-        function filterPresensiTable() {
-            const search = document.getElementById('presensi-search').value.toLowerCase();
-            const filtered = presensiData.filter(p => 
-                p.nama.toLowerCase().includes(search) || 
-                p.kelas.toLowerCase().includes(search) || 
-                p.modulTitle.toLowerCase().includes(search)
-            );
-            renderPresensiTable(filtered);
-        }
-
-        function updatePresensiStats() {
-            document.getElementById('stat-total-presensi').innerText = presensiData.length;
-            
-            const uniqueModules = new Set(presensiData.map(p => p.modulTitle)).size;
-            document.getElementById('stat-total-modul').innerText = uniqueModules;
-
-            const classCounts = {};
-            presensiData.forEach(p => {
-                classCounts[p.kelas] = (classCounts[p.kelas] || 0) + 1;
-            });
-
-            let topClass = "-";
-            let maxCount = 0;
-            for (const [cls, count] of Object.entries(classCounts)) {
-                if (count > maxCount) {
-                    maxCount = count;
-                    topClass = cls;
-                }
-            }
-            document.getElementById('stat-kelas-teraktif').innerText = topClass;
-        }
-
-        function initPresensiCharts() {
-            if (typeof Chart === 'undefined') return;
-
-            const classCounts = {};
-            presensiData.forEach(p => {
-                classCounts[p.kelas] = (classCounts[p.kelas] || 0) + 1;
-            });
-
-            const classLabels = Object.keys(classCounts).length ? Object.keys(classCounts) : ['X TKJ 1', 'XI RPL 1', 'XII TKR 1', 'X AKL 1'];
-            const classData = Object.values(classCounts).length ? Object.values(classCounts) : [0, 0, 0, 0];
-
-            const ctxKelas = document.getElementById('chart-presensi-kelas');
-            if (ctxKelas) {
-                if (chartKelasInstance) chartKelasInstance.destroy();
-                chartKelasInstance = new Chart(ctxKelas, {
-                    type: 'bar',
-                    data: {
-                        labels: classLabels,
-                        datasets: [{
-                            label: 'Jumlah Presensi Siswa',
-                            data: classData,
-                            backgroundColor: '#0d9488',
-                            borderRadius: 8
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                        }
-                    }
-                });
-            }
-
-            const modulCounts = {};
-            presensiData.forEach(p => {
-                const shortTitle = p.modulTitle.length > 25 ? p.modulTitle.substring(0, 22) + '...' : p.modulTitle;
-                modulCounts[shortTitle] = (modulCounts[shortTitle] || 0) + 1;
-            });
-
-            const modulLabels = Object.keys(modulCounts).length ? Object.keys(modulCounts) : ['Belum Ada Data'];
-            const modulData = Object.values(modulCounts).length ? Object.values(modulCounts) : [1];
-
-            const ctxModul = document.getElementById('chart-akses-modul');
-            if (ctxModul) {
-                if (chartModulInstance) chartModulInstance.destroy();
-                chartModulInstance = new Chart(ctxModul, {
-                    type: 'doughnut',
-                    data: {
-                        labels: modulLabels,
-                        datasets: [{
-                            data: modulData,
-                            backgroundColor: ['#0d9488', '#8b5cf6', '#ec4899', '#f59e0b', '#3b82f6', '#10b981']
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
-                        }
-                    }
-                });
-            }
-        }
-
-        function exportPresensiPDF() {
-            const printWindow = window.open('', '_blank');
-            const now = new Date().toLocaleString('id-ID');
-
-            let tableRows = '';
-            presensiData.forEach((p, i) => {
-                tableRows += `
-                    <tr>
-                        <td style="border: 1px solid #ddd; padding: 6px; text-align: center;">${i + 1}</td>
-                        <td style="border: 1px solid #ddd; padding: 6px;">${p.waktu}</td>
-                        <td style="border: 1px solid #ddd; padding: 6px; font-weight: bold;">${p.nama}</td>
-                        <td style="border: 1px solid #ddd; padding: 6px;">${p.kelas}</td>
-                        <td style="border: 1px solid #ddd; padding: 6px;">${p.modulTitle}</td>
-                        <td style="border: 1px solid #ddd; padding: 6px;">${p.aktivitas}</td>
-                    </tr>
-                `;
-            });
-
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Laporan Presensi Kehadiran Belajar Siswa - BK SMK</title>
-                    <style>
-                        body { font-family: sans-serif; padding: 20px; color: #333; }
-                        h2, h4 { margin: 5px 0; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
-                        th { background: #0d9488; color: white; padding: 8px; border: 1px solid #ddd; }
-                        .header-box { border-bottom: 2px solid #0d9488; padding-bottom: 10px; margin-bottom: 15px; }
-                        .footer { margin-top: 30px; text-align: right; font-size: 11px; }
-                    </style>
-                </head>
-                <body>
-                    <div class="header-box">
-                        <h2>PUSAT BIMBINGAN DAN KONSELING (BK)</h2>
-                        <h4>SMKS PEMUDA 3 KESAMBEN BLITAR</h4>
-                        <p style="font-size: 12px; color: #666;">Laporan Presensi Kehadiran & Indikator Pengaksesan Modul Belajar Digital</p>
-                    </div>
-
-                    <p style="font-size: 12px;"><strong>Tanggal Cetak:</strong> ${now}</p>
-                    <p style="font-size: 12px;"><strong>Total Siswa Presensi:</strong> ${presensiData.length} Siswa</p>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Waktu</th>
-                                <th>Nama Siswa</th>
-                                <th>Kelas</th>
-                                <th>Modul / Media</th>
-                                <th>Aktivitas</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${tableRows}
-                        </tbody>
-                    </table>
-
-                    <div class="footer">
-                        <p>Mengetahui,</p>
-                        <br><br><br>
-                        <p><strong>Koordinator Guru BK</strong></p>
-                    </div>
-
-                    <script>
-                        window.onload = function() { window.print(); }
-                    <\/script>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-        }
-
-        function exportPresensiDOC() {
-            const now = new Date().toLocaleString('id-ID');
-            let tableRows = '';
-            presensiData.forEach((p, i) => {
-                tableRows += `
-                    <tr>
-                        <td style="border: 1px solid #000; padding: 5px;">${i + 1}</td>
-                        <td style="border: 1px solid #000; padding: 5px;">${p.waktu}</td>
-                        <td style="border: 1px solid #000; padding: 5px;"><b>${p.nama}</b></td>
-                        <td style="border: 1px solid #000; padding: 5px;">${p.kelas}</td>
-                        <td style="border: 1px solid #000; padding: 5px;">${p.modulTitle}</td>
-                        <td style="border: 1px solid #000; padding: 5px;">${p.aktivitas}</td>
-                    </tr>
-                `;
-            });
-
-            const headerHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
-                "xmlns:w='urn:schemas-microsoft-com:office:word' "+
-                "xmlns='http://www.w3.org/TR/REC-html40'>"+
-                "<head><title>Laporan Presensi BK</title><style>body{font-family:Arial, sans-serif;} table{border-collapse:collapse;width:100%;} th,td{font-size:11px;}</style></head><body>";
-            
-            const contentHtml = `
-                <h2>LAPORAN PRESENSI KEHADIRAN & AKSES MODUL BK</h2>
-                <h3>SMKS PEMUDA 3 KESAMBEN BLITAR</h3>
-                <p>Dicetak pada: ${now}</p>
-                <br/>
-                <table border="1">
-                    <tr style="background-color:#0d9488; color:#ffffff;">
-                        <th>No</th>
-                        <th>Waktu Presensi</th>
-                        <th>Nama Siswa</th>
-                        <th>Kelas</th>
-                        <th>Modul/Media</th>
-                        <th>Aktivitas</th>
-                    </tr>
-                    ${tableRows}
-                </table>
+            toast.innerHTML = `
+                <i class="${type === 'success' ? 'fa-solid fa-circle-check' : type === 'error' ? 'fa-solid fa-circle-exclamation' : 'fa-solid fa-circle-info'} text-base"></i>
+                <span>${message}</span>
             `;
 
-            const footerHtml = "</body></html>";
-            const sourceHTML = headerHtml + contentHtml + footerHtml;
-
-            const blob = new Blob(['\ufeff', sourceHTML], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Laporan_Presensi_Akses_Modul_BK_${Date.now()}.doc`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showToast("Laporan presensi format .DOC berhasil diunduh!");
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const nama = document.getElementById('konseling-nama').value;
-            showToast(`Pendaftaran konseling untuk ${nama} berhasil dikirim! Guru BK akan segera menghubungi Anda via WhatsApp.`);
-            e.target.reset();
-        }
-
-        function handleCurhatSubmit(e) {
-            e.preventDefault();
-            showToast("Curhatan anonim berhasil dikirim secara aman. Terima kasih telah berbagi keresahanmu.");
-            e.target.reset();
-        }
-
-        function updateFileNameText(input) {
-            if (input.files && input.files[0]) {
-                const f = input.files[0];
-                document.getElementById('file-chosen-text').innerText = `Terpilih: ${f.name} (${(f.size / (1024*1024)).toFixed(1)} MB)`;
-            }
-        }
-
-        function handleModuleUpload(e) {
-            e.preventDefault();
-            const title = document.getElementById('upload-title').value.trim();
-            const type = document.getElementById('upload-type').value;
-            const category = document.getElementById('upload-category').value;
-            const desc = document.getElementById('upload-desc').value.trim();
-            const fileInput = document.getElementById('upload-file-input');
-            const urlInput = document.getElementById('upload-url-input').value.trim();
-
-            const isVideo = type === 'video';
-            const categoryMap = {
-                'karir': 'Karir & BMW',
-                'mental': 'Kesehatan Mental',
-                'belajar': 'Belajar Kejuruan',
-                'sosial': 'Pribadi & Sosial'
-            };
-
-            const progressContainer = document.getElementById('upload-progress-container');
-            const progressBar = document.getElementById('upload-progress-bar');
-            const progressPercent = document.getElementById('upload-progress-percent');
-            const btnSubmit = document.getElementById('btn-submit-upload');
-
-            progressContainer.classList.remove('hidden');
-            btnSubmit.disabled = true;
-
-            let currentProgress = 0;
-            const interval = setInterval(() => {
-                currentProgress += 20;
-                progressBar.style.width = currentProgress + '%';
-                progressPercent.innerText = currentProgress + '%';
-
-                if (currentProgress >= 100) {
-                    clearInterval(interval);
-                    
-                    let fileName = isVideo ? "Video_Media_BK.mp4" : "Dokumen_Bimbingan.pdf";
-                    let fileSize = "12.5 MB";
-
-                    if (fileInput.files && fileInput.files[0]) {
-                        fileName = fileInput.files[0].name;
-                        fileSize = (fileInput.files[0].size / (1024*1024)).toFixed(1) + " MB";
-                    }
-
-                    const newMod = {
-                        id: Date.now(),
-                        title: title,
-                        category: category,
-                        categoryLabel: categoryMap[category] || 'Umum',
-                        description: desc,
-                        fileType: isVideo ? 'mp4' : 'pdf',
-                        mediaType: isVideo ? 'video' : 'doc',
-                        fileName: fileName,
-                        fileSize: fileSize,
-                        videoUrl: urlInput || "https://www.w3schools.com/html/mov_bbb.mp4",
-                        downloads: 1,
-                        date: new Date().toISOString().split('T')[0],
-                        author: "Guru BK SMKS Pemuda 3"
-                    };
-
-                    modulesData.unshift(newMod);
-                    showToast("Media pembelajaran baru berhasil dipublikasikan!");
-                    
-                    e.target.reset();
-                    document.getElementById('file-chosen-text').innerText = "Klik untuk memilih file PDF atau Video";
-                    progressContainer.classList.add('hidden');
-                    progressBar.style.width = '0%';
-                    btnSubmit.disabled = false;
-
-                    switchMateriMode('murid');
-                }
-            }, 250);
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            const msgEl = document.getElementById('toast-message');
-            if (!toast || !msgEl) return;
-
-            msgEl.innerText = msg;
-            toast.classList.remove('hidden');
-            toast.classList.add('flex');
+            container.appendChild(toast);
 
             setTimeout(() => {
-                toast.classList.remove('flex');
-                toast.classList.add('hidden');
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
             }, 4000);
         }
-
-        // Initialize default view on load
-        window.onload = function() {
-            showSection('beranda');
-        };
     </script>
 </body>
 </html>
